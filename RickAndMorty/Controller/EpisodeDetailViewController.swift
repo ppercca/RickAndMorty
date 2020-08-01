@@ -23,6 +23,7 @@ class EpisodeDetailViewController: UIViewController {
         super.viewDidLoad()
         loadEpisodeDetail()
         configureCollection()
+//        NotificationCenter.default.addObserver(self, selector: #selector(rotateScreen), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
 
     fileprivate func loadEpisodeDetail() {
@@ -37,6 +38,29 @@ class EpisodeDetailViewController: UIViewController {
         flowLayout.minimumLineSpacing = 3.0
     }
     
+//    @objc func rotateScreen () {
+//        var width = view.frame.size.width
+//        var height = view.frame.size.height
+//        if !(self.isViewLoaded && self.view.window != nil) {
+//            width = view.frame.size.height
+//            height = view.frame.size.width
+//        }
+//        orderCells(width: width, height: height)
+//    }
+    
+//    func orderCells(width: CGFloat, height: CGFloat) {
+//          let space:CGFloat = 3.0
+//          var columns:CGFloat = 3.0
+//          if  width > height {
+//              columns = 5.0
+//          } else {
+//              columns = 3.0
+//          }
+//          let dimension = (width - ((columns - 1) * space)) / columns
+//          flowLayout.itemSize = CGSize(width: dimension, height: dimension * 0.8)
+//          flowLayout.minimumInteritemSpacing = space
+//          flowLayout.minimumLineSpacing = space
+//      }
 }
 
 extension EpisodeDetailViewController: UICollectionViewDelegateFlowLayout {

@@ -67,7 +67,7 @@ class EpisodesViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
         performSegue(withIdentifier: "showEpisodeDetail", sender: nil)
-        tableView.deselectRow(at: indexPath, animated: true)
+//        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }

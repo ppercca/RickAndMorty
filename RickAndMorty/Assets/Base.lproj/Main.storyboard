@@ -187,11 +187,11 @@ first location</string>
             <objects>
                 <viewController storyboardIdentifier="CharacterDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="f87-Kv-reT" userLabel="Character Detail View Controller" customClass="CharacterDetailViewController" customModule="RickAndMorty" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rYD-hV-7ME">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EnN-Ue-fAB">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V0d-KO-Dfp">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="666"/>
@@ -355,7 +355,6 @@ first location</string>
                         <outlet property="nameLabel" destination="cOt-aI-hJH" id="p9H-5G-t0z"/>
                         <outlet property="statusLabel" destination="bky-50-mzM" id="xYp-EV-6eC"/>
                         <outlet property="tableView" destination="PQf-aN-gMD" id="tm1-UL-Xrq"/>
-                        <segue destination="55p-c6-r8b" kind="showDetail" identifier="showEpisodeDetail" id="cme-fX-GI9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oa9-Sz-BXn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -371,7 +370,7 @@ first location</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="TkZ-fc-RJr">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavoriteTableViewCell" id="TkZ-fc-RJr">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TkZ-fc-RJr" id="QVq-BX-mb0">
@@ -396,15 +395,15 @@ first location</string>
             <objects>
                 <viewController storyboardIdentifier="EpisodeDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="55p-c6-r8b" userLabel="Episode Detail View Controller" customClass="EpisodeDetailViewController" customModule="RickAndMorty" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mCX-k7-ETz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="wlD-7P-XVf">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rbc-Ro-IZA">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                        <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Da1-va-6Jh">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="639.5"/>
@@ -560,7 +559,6 @@ first location</string>
                         <outlet property="flowLayout" destination="Fod-Cr-bBc" id="6dB-K6-SV3"/>
                         <outlet property="imageView" destination="Iyj-KJ-UQc" id="ymd-xO-Hfk"/>
                         <outlet property="nameLabel" destination="TE2-ad-Cat" id="pvW-Su-phJ"/>
-                        <segue destination="f87-Kv-reT" kind="show" identifier="showCharacterDetail" id="mkB-Pa-cjp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pVl-Ax-uaj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -707,10 +705,6 @@ Label</string>
             <point key="canvasLocation" x="-1320.289855072464" y="214.95535714285714"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="cme-fX-GI9"/>
-        <segue reference="mkB-Pa-cjp"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="Placeholder" width="300" height="300"/>
         <image name="heart" catalog="system" width="128" height="109"/>
