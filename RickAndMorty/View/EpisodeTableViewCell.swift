@@ -9,5 +9,8 @@
 import Foundation
 import UIKit
 class EpisodeTableViewCell: UITableViewCell {
+    @IBOutlet weak var episodeImageView: UIImageView!
+    @IBOutlet weak var episodeLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var airDateLabel: UILabel!
 }

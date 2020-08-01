@@ -8,21 +8,10 @@
 
 import UIKit
 
-func statusIcon(status: String) -> String {
-        switch status {
-        case "Alive":
-            return "🟢"
-        case "Dead":
-            return "🔴"
-        default:
-            return "⚪"
-    }
-}
+class CharactersViewController: UITableViewController {
 
-class CharactersViewController: UIViewController {
-
-    @IBOutlet var tableView: UITableView!
     var page: Int = 1
+    var selectedIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,23 +19,30 @@ class CharactersViewController: UIViewController {
     }
     
     func handleGetCharactersResponse(charactersResponse: CharactersResponse?, error: Error?) {
-        RickAndMortyModel.characters = charactersResponse
+        if RickAndMortyModel.characters == nil {
+            RickAndMortyModel.characters = charactersResponse
+        } else {
+            RickAndMortyModel.characters?.results.append(contentsOf: charactersResponse!.results)
+        }
         tableView.reloadData()
     }
     
-}
-
-extension CharactersViewController: UITableViewDataSource, UITableViewDelegate {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showCharacterDetail" {
+            let characterDetailViewController = segue.destination as! CharacterDetailViewController
+            characterDetailViewController.character = RickAndMortyModel.characters?.results[selectedIndex]
+        }
+    }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return RickAndMortyModel.characters?.results.count ?? 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterTableViewCell") as! CharacterTableViewCell
         if let character = RickAndMortyModel.characters?.results[indexPath.row] {
             RickAndMortyClient.getImage(path: character.image) { (data, error) in
@@ -54,7 +50,7 @@ extension CharactersViewController: UITableViewDataSource, UITableViewDelegate {
 
             }
             cell.nameLabel.text = character.name
-            cell.statusLabel.text = "\(statusIcon(status: character.status)) \(character.status) - \(character.species)"
+            cell.statusLabel.text = "\(Utils.statusIcon(status: character.status)) \(character.status) - \(character.species)"
             cell.lastKnownLocationLabel.text = character.location.name
             RickAndMortyClient.getEpisode(id: nil, urlPath: character.episode[0]) { (edpisodeResponse, error) in
                 if let edpisodeResponse = edpisodeResponse {
@@ -63,6 +59,22 @@ extension CharactersViewController: UITableViewDataSource, UITableViewDelegate {
             }
         }
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let count = RickAndMortyModel.characters?.results.count, let infoCount = RickAndMortyModel.characters?.info.count else { return }
+        if indexPath.row == count - 1 {
+            if count < infoCount {
+                page += 1
+                RickAndMortyClient.getCharacters(page: page, completion: handleGetCharactersResponse(charactersResponse:error:))
+            }
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedIndex = indexPath.row
+        performSegue(withIdentifier: "showCharacterDetail", sender: nil)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     

@@ -46,6 +46,22 @@ class RickAndMortyClient {
         }
     }
     
+    class func getCharacter(id: Int?, urlPath: String?, completion: @escaping (CharacterResponse?, Error?) -> Void) {
+        let url: URL
+        if let urlPath = urlPath {
+            url =  URL(string: urlPath)!
+        } else {
+            url = Endpoints.getCharacter(id!).url
+        }
+        taskForGETRequest(url: url, responseType: CharacterResponse.self) { (response, error) in
+            if let response = response {
+                completion(response, nil)
+            } else {
+                completion(nil, error)
+            }
+        }
+    }
+    
     class func getEpisodes(page: Int, completion: @escaping (EpisodesResponse?, Error?) -> Void) {
         taskForGETRequest(url: Endpoints.getEpisodes(page).url, responseType: EpisodesResponse.self) { (response, error) in
             if let response = response {
