@@ -563,14 +563,14 @@
                                             <rect key="frame" x="5" y="5" width="404" height="140"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="x15-PK-Yqm">
-                                                    <rect key="frame" x="0.0" y="0.0" width="160" height="140"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="140"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="160" id="Kja-ZM-qrk"/>
-                                                        <constraint firstAttribute="height" constant="120" id="msK-in-6Yw"/>
+                                                        <constraint firstAttribute="width" constant="180" id="Kja-ZM-qrk"/>
+                                                        <constraint firstAttribute="height" constant="110" id="msK-in-6Yw"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9tS-wP-8HH" userLabel="Name Label">
-                                                    <rect key="frame" x="170" y="10" width="224" height="64.5"/>
+                                                    <rect key="frame" x="190" y="10" width="204" height="64.5"/>
                                                     <string key="text">Label
 Label
 Label</string>
@@ -579,19 +579,19 @@ Label</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GDm-JT-VUZ" userLabel="Episode Label">
-                                                    <rect key="frame" x="170" y="74.5" width="224" height="15"/>
+                                                    <rect key="frame" x="190" y="74.5" width="204" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Air Date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJs-KU-HhF">
-                                                    <rect key="frame" x="170" y="99" width="224" height="15"/>
+                                                    <rect key="frame" x="190" y="99" width="204" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x2G-Nd-flH" userLabel="Air Date Label">
-                                                    <rect key="frame" x="170" y="114" width="224" height="16"/>
+                                                    <rect key="frame" x="190" y="114" width="204" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>

@@ -30,14 +30,6 @@ class EpisodesViewController: UITableViewController {
         }
         tableView.reloadData()
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "showEpisodeDetail" {
-//            let episodeDetailViewController = segue.destination as! EpisodeDetailViewController
-//            episodeDetailViewController.navigationItem.backBarButtonItem?.title = "Episodes"
-//            episodeDetailViewController.episode = RickAndMortyModel.episodes?.results[selectedIndex]
-//        }
-//    }
        
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -72,9 +64,6 @@ class EpisodesViewController: UITableViewController {
         let episodeDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "EpisodeDetailViewController") as! EpisodeDetailViewController
         episodeDetailViewController.episode = RickAndMortyModel.episodes?.results[indexPath.row]
         self.navigationController?.pushViewController(episodeDetailViewController, animated: true)
-//        selectedIndex = indexPath.row
-//        performSegue(withIdentifier: "showEpisodeDetail", sender: nil)
-//        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }
