@@ -43,9 +43,9 @@ class CharacterDetailViewController: UIViewController {
     
     func configureDarkMode()  {
         view.backgroundColor = UIColor(named: "PrimaryBackground1")
-        characterImageView.layer.cornerRadius = 10
-        contentView.backgroundColor = UIColor(named: "PrimaryBackground1")
-        myView.backgroundColor = UIColor(named: "PrimaryBackground2")
+        contentView.layer.cornerRadius = 10
+        contentView.clipsToBounds = true
+        contentView.backgroundColor = UIColor(named: "PrimaryBackground2")
         nameLabel.textColor = UIColor(named: "PrimaryLabelValue1")
         statusLabel.textColor = UIColor(named: "PrimaryLabelValue1")
         firstSeenLocationLabel.textColor = UIColor(named: "PrimaryLabelValue1")
@@ -53,6 +53,7 @@ class CharacterDetailViewController: UIViewController {
         firstSeenIn.textColor = UIColor(named: "PrimaryLabel1")
         lastKnowLocation.textColor = UIColor(named: "PrimaryLabel1")
         episodesLabel.textColor = UIColor(named: "PrimaryLabel1")
+        tableView.backgroundColor = UIColor(named: "PrimaryBackground2")
     }
     
     fileprivate func loadCharacterDetail() {
@@ -81,6 +82,11 @@ extension CharacterDetailViewController: UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EpisodeTableViewCell")!
+        if true {
+            cell.backgroundColor = UIColor(named: "PrimaryBackground2")
+            cell.textLabel?.textColor = UIColor(named: "PrimaryLabelValue1")
+            cell.detailTextLabel?.textColor = UIColor(named: "PrimaryLabel1")
+        }
         RickAndMortyClient.getEpisode(id: nil, urlPath: character.episode[indexPath.row]) { (episodeResponse, error) in
             if let episodeResponse = episodeResponse {
                 cell.textLabel?.text = episodeResponse.name
