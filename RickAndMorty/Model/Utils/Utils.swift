@@ -24,9 +24,9 @@ class Utils {
     class func genderIcon(gender: String) -> String {
             switch gender {
             case "Male":
-                return " - ♂️"
+                return "- ♂️"
             case "Female":
-                return " - ♀️"
+                return "- ♀️"
             default:
                 return ""
         }

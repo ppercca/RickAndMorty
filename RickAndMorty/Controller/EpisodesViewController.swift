@@ -17,6 +17,9 @@ class EpisodesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         RickAndMortyClient.getEpisodes(page: page, completion: handleGetEpisodesResponse(episodesResponse:error:))
+        if true { // UserDefaults.standard.bool(forKey: "isDarkModeEnabled")
+            tableView.backgroundColor = UIColor(named: "PrimaryBackground1")
+        }
     }
     
     func handleGetEpisodesResponse(episodesResponse: EpisodesResponse?, error: Error?) {
@@ -47,7 +50,7 @@ class EpisodesViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EpisodeTableViewCell") as! EpisodeTableViewCell
         if let episode = RickAndMortyModel.episodes?.results[indexPath.row] {
-            cell.episodeImageView.image = UIImage(named: "\(episode.episode).png")
+            cell.episodeImageView.image = UIImage(named: "\(episode.episode)") // "\(episode.episode).png"
             cell.nameLabel.text = episode.name
             cell.episodeLabel.text = episode.episode
             cell.airDateLabel.text = episode.air_date

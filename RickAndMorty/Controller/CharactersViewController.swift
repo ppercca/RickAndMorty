@@ -11,12 +11,14 @@ import UIKit
 class CharactersViewController: UITableViewController {
 
     var page: Int = 1
-    var selectedIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.tabBar.isHidden = false
         RickAndMortyClient.getCharacters(page: page, completion: handleGetCharactersResponse(charactersResponse:error:))
+        if true { // UserDefaults.standard.bool(forKey: "isDarkModeEnabled")
+            tableView.backgroundColor = UIColor(named: "PrimaryBackground1")
+        }
     }
     
     func handleGetCharactersResponse(charactersResponse: CharactersResponse?, error: Error?) {
@@ -26,14 +28,6 @@ class CharactersViewController: UITableViewController {
             RickAndMortyModel.characters?.results.append(contentsOf: charactersResponse!.results)
         }
         tableView.reloadData()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showCharacterDetail" {
-            let characterDetailViewController = segue.destination as! CharacterDetailViewController
-            characterDetailViewController.navigationItem.backBarButtonItem?.title = "Characters"
-            characterDetailViewController.character = RickAndMortyModel.characters?.results[selectedIndex]
-        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -74,9 +68,9 @@ class CharactersViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedIndex = indexPath.row
-        performSegue(withIdentifier: "showCharacterDetail", sender: nil)
-//        tableView.deselectRow(at: indexPath, animated: true)
+        let characterDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "CharacterDetailViewController") as! CharacterDetailViewController
+        characterDetailViewController.character = RickAndMortyModel.characters?.results[indexPath.row]
+        self.navigationController?.pushViewController(characterDetailViewController, animated: true)
     }
     
     
