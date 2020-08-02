@@ -25,6 +25,16 @@ class EpisodeDetailViewController: UIViewController {
         configureCollection()
 //        NotificationCenter.default.addObserver(self, selector: #selector(rotateScreen), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false
+    }
 
     fileprivate func loadEpisodeDetail() {
         imageView.image = UIImage(named: "\(episode.episode).png")
@@ -67,13 +77,13 @@ extension EpisodeDetailViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
-        let height = collectionView.frame.height
-        var columns:CGFloat = 3.0
-        if  width > height {
-            columns = 5.0
-        } else {
-            columns = 3.0
-        }
+//        let height = collectionView.frame.height
+        let columns:CGFloat = 3.0
+//        if  width > height {
+//            columns = 5.0
+//        } else {
+//            columns = 3.0
+//        }
         let dimension = (width - ((columns - 1) * 3.0)) / columns
         return CGSize(width: dimension, height: dimension)
     }
@@ -111,7 +121,8 @@ extension EpisodeDetailViewController: UICollectionViewDelegate, UICollectionVie
             if let characterResponse = characterResponse {
                 characterDetailViewController.character = characterResponse
 //                characterDetailViewController.modalPresentationStyle = .fullScreen
-                self.present(characterDetailViewController, animated: true, completion: nil)
+                self.navigationController?.pushViewController(characterDetailViewController, animated: true)
+//                self.present(characterDetailViewController, animated: true, completion: nil)
             }
         })
         

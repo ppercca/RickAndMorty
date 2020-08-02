@@ -31,6 +31,7 @@ class EpisodesViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showEpisodeDetail" {
             let episodeDetailViewController = segue.destination as! EpisodeDetailViewController
+            episodeDetailViewController.navigationItem.backBarButtonItem?.title = "Episodes"
             episodeDetailViewController.episode = RickAndMortyModel.episodes?.results[selectedIndex]
         }
     }

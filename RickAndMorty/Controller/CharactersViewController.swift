@@ -15,6 +15,7 @@ class CharactersViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBarController?.tabBar.isHidden = false
         RickAndMortyClient.getCharacters(page: page, completion: handleGetCharactersResponse(charactersResponse:error:))
     }
     
@@ -30,6 +31,7 @@ class CharactersViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showCharacterDetail" {
             let characterDetailViewController = segue.destination as! CharacterDetailViewController
+            characterDetailViewController.navigationItem.backBarButtonItem?.title = "Characters"
             characterDetailViewController.character = RickAndMortyModel.characters?.results[selectedIndex]
         }
     }

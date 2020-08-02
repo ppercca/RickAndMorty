@@ -24,6 +24,16 @@ class CharacterDetailViewController: UIViewController {
         navigationController?.setToolbarHidden(true, animated: false)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    
     fileprivate func loadCharacterDetail() {
         nameLabel.text = character.name
         statusLabel.text = "\(Utils.statusIcon(status: character.status)) \(character.status) - \(character.species)  \(Utils.genderIcon(gender: character.gender))"
@@ -64,7 +74,7 @@ extension CharacterDetailViewController: UITableViewDelegate, UITableViewDataSou
                     if let episodeResponse = episodeResponse {
                         episodeDetailViewController.episode = episodeResponse
         //                characterDetailViewController.modalPresentationStyle = .fullScreen
-                        self.present(episodeDetailViewController, animated: true, completion: nil)
+                        self.navigationController?.pushViewController(episodeDetailViewController, animated: true)
                     }
                 })
     }

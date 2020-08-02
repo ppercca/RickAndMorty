@@ -32,6 +32,7 @@
 		5272B6F224D50CC40035FBEA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5272B6F124D50CC40035FBEA /* Utils.swift */; };
 		5272B6F424D54A2B0035FBEA /* EpisodeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5272B6F324D54A2B0035FBEA /* EpisodeDetailViewController.swift */; };
 		5272B6F624D54C790035FBEA /* CharacterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5272B6F524D54C790035FBEA /* CharacterCollectionViewCell.swift */; };
+		52DCF94924D5F651005C373F /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52DCF94824D5F651005C373F /* Color.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		5272B6F124D50CC40035FBEA /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		5272B6F324D54A2B0035FBEA /* EpisodeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailViewController.swift; sourceTree = "<group>"; };
 		5272B6F524D54C790035FBEA /* CharacterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCollectionViewCell.swift; sourceTree = "<group>"; };
+		52DCF94824D5F651005C373F /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +215,7 @@
 				5223A99624D1E0E9003B33B7 /* Main.storyboard */,
 				5223A99924D1E0EB003B33B7 /* Assets.xcassets */,
 				5223A99B24D1E0EB003B33B7 /* LaunchScreen.storyboard */,
+				52DCF94824D5F651005C373F /* Color.xcassets */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5223A99D24D1E0EB003B33B7 /* LaunchScreen.storyboard in Resources */,
+				52DCF94924D5F651005C373F /* Color.xcassets in Resources */,
 				5223A99A24D1E0EB003B33B7 /* Assets.xcassets in Resources */,
 				5223A99824D1E0E9003B33B7 /* Main.storyboard in Resources */,
 			);
