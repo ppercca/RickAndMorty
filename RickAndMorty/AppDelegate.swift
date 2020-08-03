@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func checkIfFirstLaunch() {
-        if UserDefaults.standard.bool(forKey: "HasLaunchedBefore") {
+        if UserDefaults.standard.bool(forKey: "isDarkModeEnabled") {
             print("App has launched before")
         } else {
             print("This is the first launch ever!")

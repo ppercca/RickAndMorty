@@ -11,13 +11,22 @@ import UIKit
 class CharactersViewController: UITableViewController {
 
     var page: Int = 1
+     var darkMode: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tabBarController?.tabBar.isHidden = false
         RickAndMortyClient.getCharacters(page: page, completion: handleGetCharactersResponse(charactersResponse:error:))
-        if true { // UserDefaults.standard.bool(forKey: "isDarkModeEnabled")
-            tableView.backgroundColor = UIColor(named: "PrimaryBackground1")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        darkMode = UserDefaults.standard.bool(forKey: "isDarkModeEnabled")
+        if darkMode {
+            configureDarkMode()
+            tableView.reloadData()
+        } else {
+            configureLightMode()
+            tableView.reloadData()
         }
     }
     
@@ -40,6 +49,11 @@ class CharactersViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterTableViewCell") as! CharacterTableViewCell
+        if darkMode {
+            configureCellDarkMode(cell: cell)
+        } else {
+            configureCellLightMode(cell: cell)
+        }
         if let character = RickAndMortyModel.characters?.results[indexPath.row] {
             RickAndMortyClient.getImage(path: character.image) { (data, error) in
                 cell.characterImageView.image = UIImage(data: data!)
@@ -73,5 +87,38 @@ class CharactersViewController: UITableViewController {
         self.navigationController?.pushViewController(characterDetailViewController, animated: true)
     }
     
+}
+
+extension CharactersViewController {
+    
+    func configureDarkMode() {
+        tableView.backgroundColor = UIColor(named: "DarkBackground1")
+    }
+    
+    func configureLightMode() {
+        tableView.backgroundColor = UIColor(named: "LightBackground1")
+    }
+    
+    func configureCellDarkMode(cell: CharacterTableViewCell)  {
+        cell.containerView.backgroundColor = UIColor(named: "DarkBackground1")
+        cell.view.backgroundColor = UIColor(named: "DarkBackground2")
+        cell.nameLabel.textColor = UIColor(named: "DarkValue")
+        cell.statusLabel.textColor = UIColor(named: "DarkValue")
+        cell.firstSeenLocationLabel.textColor = UIColor(named: "DarkValue")
+        cell.lastKnownLocationLabel.textColor = UIColor(named: "DarkValue")
+        cell.firstSeenIn.textColor = UIColor(named: "DarkLabel")
+        cell.lastKnowLocation.textColor = UIColor(named: "DarkLabel")
+    }
+    
+    func configureCellLightMode(cell: CharacterTableViewCell) {
+        cell.containerView.backgroundColor = UIColor(named: "LightBackground1")
+        cell.view.backgroundColor = UIColor(named: "LightBackground2")
+        cell.nameLabel.textColor = UIColor(named: "LightValue")
+        cell.statusLabel.textColor = UIColor(named: "LightValue")
+        cell.firstSeenLocationLabel.textColor = UIColor(named: "LightValue")
+        cell.lastKnownLocationLabel.textColor = UIColor(named: "LightValue")
+        cell.firstSeenIn.textColor = UIColor(named: "LightLabel")
+        cell.lastKnowLocation.textColor = UIColor(named: "LightLabel")
+    }
     
 }

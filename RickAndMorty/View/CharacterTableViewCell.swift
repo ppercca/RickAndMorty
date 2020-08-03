@@ -25,18 +25,6 @@ class CharacterTableViewCell: UITableViewCell {
         super.awakeFromNib()
         view.layer.cornerRadius = 10
         view.clipsToBounds = true
-        configureDarkMode()
-        
     }
-    
-    func configureDarkMode()  {
-        containerView.backgroundColor = UIColor(named: "PrimaryBackground1")
-        view.backgroundColor = UIColor(named: "PrimaryBackground2")
-        nameLabel.textColor = UIColor(named: "PrimaryLabelValue1")
-        statusLabel.textColor = UIColor(named: "PrimaryLabelValue1")
-        firstSeenLocationLabel.textColor = UIColor(named: "PrimaryLabelValue1")
-        lastKnownLocationLabel.textColor = UIColor(named: "PrimaryLabelValue1")
-        firstSeenIn.textColor = UIColor(named: "PrimaryLabel1")
-        lastKnowLocation.textColor = UIColor(named: "PrimaryLabel1")
-    }
+
 }

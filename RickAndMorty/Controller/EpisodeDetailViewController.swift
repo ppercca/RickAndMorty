@@ -14,21 +14,32 @@ class EpisodeDetailViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var episodeLabel: UILabel!
+    @IBOutlet weak var airDate: UILabel!
     @IBOutlet weak var airDateLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var episodes: UILabel!
     var episode: EpisodeResponse!
+    var darkMode: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadEpisodeDetail()
         configureCollection()
-//        NotificationCenter.default.addObserver(self, selector: #selector(rotateScreen), name: UIDevice.orientationDidChangeNotification, object: nil)
+        contentView.layer.cornerRadius = 10
+        contentView.clipsToBounds = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
+        darkMode = UserDefaults.standard.bool(forKey: "isDarkModeEnabled")
+        if darkMode {
+            configureDarkMode()
+        } else {
+            configureLightMode()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -120,12 +131,36 @@ extension EpisodeDetailViewController: UICollectionViewDelegate, UICollectionVie
         RickAndMortyClient.getCharacter(id: nil, urlPath: episode.characters[indexPath.row], completion: { (characterResponse, error) in
             if let characterResponse = characterResponse {
                 characterDetailViewController.character = characterResponse
-//                characterDetailViewController.modalPresentationStyle = .fullScreen
                 self.navigationController?.pushViewController(characterDetailViewController, animated: true)
-//                self.present(characterDetailViewController, animated: true, completion: nil)
             }
         })
         
     }
     
+}
+
+extension EpisodeDetailViewController {
+    
+    func configureDarkMode()  {
+        view.backgroundColor = UIColor(named: "DarkBackground1")
+        contentView.backgroundColor = UIColor(named: "DarkBackground2")
+        nameLabel.textColor = UIColor(named: "DarkValue")
+        episodeLabel.textColor = UIColor(named: "DarkValue")
+        airDateLabel.textColor = UIColor(named: "DarkValue")
+        episodes.textColor = UIColor(named: "DarkLabel")
+        airDate.textColor = UIColor(named: "DarkLabel")
+        collectionView.backgroundColor = UIColor(named: "DarkBackground2")
+    }
+    
+    func configureLightMode()  {
+        view.backgroundColor = UIColor(named: "LightBackground1")
+        contentView.backgroundColor = UIColor(named: "LightBackground2")
+        nameLabel.textColor = UIColor(named: "LightValue")
+        episodeLabel.textColor = UIColor(named: "LightValue")
+        airDateLabel.textColor = UIColor(named: "LightValue")
+        episodes.textColor = UIColor(named: "LightLabel")
+        airDate.textColor = UIColor(named: "LightLabel")
+        collectionView.backgroundColor = UIColor(named: "LightBackground2")
+    }
+
 }

@@ -12,13 +12,22 @@ import UIKit
 class EpisodesViewController: UITableViewController {
 
     var page: Int = 1
-    var selectedIndex = 0
+    var darkMode: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         RickAndMortyClient.getEpisodes(page: page, completion: handleGetEpisodesResponse(episodesResponse:error:))
-        if true { // UserDefaults.standard.bool(forKey: "isDarkModeEnabled")
-            tableView.backgroundColor = UIColor(named: "PrimaryBackground1")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        darkMode = UserDefaults.standard.bool(forKey: "isDarkModeEnabled")
+        if darkMode {
+            configureDarkMode()
+            tableView.reloadData()
+        } else {
+            configureLightMode()
+            tableView.reloadData()
         }
     }
     
@@ -41,6 +50,11 @@ class EpisodesViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EpisodeTableViewCell") as! EpisodeTableViewCell
+        if darkMode {
+            configureCellDarkMode(cell: cell)
+        } else {
+            configureCellLightMode(cell: cell)
+        }
         if let episode = RickAndMortyModel.episodes?.results[indexPath.row] {
             cell.episodeImageView.image = UIImage(named: "\(episode.episode)") // "\(episode.episode).png"
             cell.nameLabel.text = episode.name
@@ -64,6 +78,36 @@ class EpisodesViewController: UITableViewController {
         let episodeDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "EpisodeDetailViewController") as! EpisodeDetailViewController
         episodeDetailViewController.episode = RickAndMortyModel.episodes?.results[indexPath.row]
         self.navigationController?.pushViewController(episodeDetailViewController, animated: true)
+    }
+    
+}
+
+extension EpisodesViewController {
+    
+    func configureDarkMode() {
+        tableView.backgroundColor = UIColor(named: "DarkBackground1")
+    }
+    
+    func configureLightMode() {
+        tableView.backgroundColor = UIColor(named: "LightBackground1")
+    }
+    
+    func configureCellDarkMode(cell: EpisodeTableViewCell)  {
+        cell.containerView.backgroundColor = UIColor(named: "DarkBackground1")
+        cell.view.backgroundColor = UIColor(named: "DarkBackground2")
+        cell.nameLabel.textColor = UIColor(named: "DarkValue")
+        cell.episodeLabel.textColor = UIColor(named: "DarkValue")
+        cell.airDateLabel.textColor = UIColor(named: "DarkValue")
+        cell.airDate.textColor = UIColor(named: "DarkLabel")
+    }
+    
+    func configureCellLightMode(cell: EpisodeTableViewCell) {
+        cell.containerView.backgroundColor = UIColor(named: "LightBackground1")
+        cell.view.backgroundColor = UIColor(named: "LightBackground2")
+        cell.nameLabel.textColor = UIColor(named: "LightValue")
+        cell.episodeLabel.textColor = UIColor(named: "LightValue")
+        cell.airDateLabel.textColor = UIColor(named: "LightValue")
+        cell.airDate.textColor = UIColor(named: "LightLabel")
     }
     
 }

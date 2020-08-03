@@ -28,6 +28,7 @@
 		5223A9D024D22F99003B33B7 /* CharacterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5223A9CF24D22F99003B33B7 /* CharacterTableViewCell.swift */; };
 		522E6AB224D3DC3800F5E6AD /* EpisodesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E6AB124D3DC3800F5E6AD /* EpisodesViewController.swift */; };
 		522E6AB424D3DD5E00F5E6AD /* EpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522E6AB324D3DD5E00F5E6AD /* EpisodeTableViewCell.swift */; };
+		523111B624D772F400DF2BAE /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523111B524D772F300DF2BAE /* SettingsTableViewController.swift */; };
 		5272B6EF24D4DAC50035FBEA /* CharacterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5272B6EE24D4DAC50035FBEA /* CharacterDetailViewController.swift */; };
 		5272B6F224D50CC40035FBEA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5272B6F124D50CC40035FBEA /* Utils.swift */; };
 		5272B6F424D54A2B0035FBEA /* EpisodeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5272B6F324D54A2B0035FBEA /* EpisodeDetailViewController.swift */; };
@@ -71,6 +72,7 @@
 		5223A9CF24D22F99003B33B7 /* CharacterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterTableViewCell.swift; sourceTree = "<group>"; };
 		522E6AB124D3DC3800F5E6AD /* EpisodesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesViewController.swift; sourceTree = "<group>"; };
 		522E6AB324D3DD5E00F5E6AD /* EpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeTableViewCell.swift; sourceTree = "<group>"; };
+		523111B524D772F300DF2BAE /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		5272B6EE24D4DAC50035FBEA /* CharacterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailViewController.swift; sourceTree = "<group>"; };
 		5272B6F124D50CC40035FBEA /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		5272B6F324D54A2B0035FBEA /* EpisodeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailViewController.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				522E6AB124D3DC3800F5E6AD /* EpisodesViewController.swift */,
 				5272B6EE24D4DAC50035FBEA /* CharacterDetailViewController.swift */,
 				5272B6F324D54A2B0035FBEA /* EpisodeDetailViewController.swift */,
+				523111B524D772F300DF2BAE /* SettingsTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				5223A9B924D1E6DB003B33B7 /* RickAndMortyClient.swift in Sources */,
 				5223A9C524D1F773003B33B7 /* LocationsResponse.swift in Sources */,
 				522E6AB424D3DD5E00F5E6AD /* EpisodeTableViewCell.swift in Sources */,
+				523111B624D772F400DF2BAE /* SettingsTableViewController.swift in Sources */,
 				5223A9C324D1F543003B33B7 /* LocationResponse.swift in Sources */,
 				5223A9C724D1FAB2003B33B7 /* EpisodesResponse.swift in Sources */,
 				5223A99124D1E0E9003B33B7 /* AppDelegate.swift in Sources */,

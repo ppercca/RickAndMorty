@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class CharacterCollectionViewCell: UICollectionViewCell {
+    
     @IBOutlet weak var imageView: UIImageView!
     
 }
