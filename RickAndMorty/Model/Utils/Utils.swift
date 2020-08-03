@@ -9,6 +9,12 @@
 import Foundation
 
 class Utils {
+    
+    enum ProviderType: String {
+        case basic
+        case google
+        case facebook
+    }
 
     class func statusIcon(status: String) -> String {
             switch status {

@@ -8,6 +8,9 @@
 
 import Foundation
 import UIKit
+import FirebaseAuth
+import GoogleSignIn
+import FacebookLogin
 
 class SettingsTableViewController: UITableViewController {
     
@@ -26,6 +29,37 @@ class SettingsTableViewController: UITableViewController {
         } else {
             configureLightMode()
         }
+    }
+    
+    @IBAction func closeSessionButtonTapped(_ sender: Any) {
+        let provider = UserDefaults.standard.string(forKey: "AuthenticatorProvider")
+        switch provider {
+        case Utils.ProviderType.basic.rawValue:
+            logOut()
+        case Utils.ProviderType.google.rawValue:
+            GIDSignIn.sharedInstance()?.signOut()
+            logOut()
+        case Utils.ProviderType.facebook.rawValue:
+            LoginManager().logOut()
+            logOut()
+            break
+        default:
+            break
+        }
+    }
+    
+    func logOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch  {
+            //
+        }
+        UserDefaults.standard.removeObject(forKey: "AuthenticatorProvider")
+        UserDefaults.standard.removeObject(forKey: "EmailAuthenticated")
+        let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "AuthViewController") as! AuthViewController
+        loginViewController.modalPresentationStyle = .fullScreen
+        loginViewController.modalTransitionStyle = .crossDissolve
+        self.present(loginViewController, animated: true, completion: nil)
     }
     
     func configureDarkMode()  {
