@@ -62,6 +62,9 @@
                                                 <state key="normal" title="Sign Up">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="signUpButtonTapped:" destination="fDD-m2-zfn" eventType="touchUpInside" id="JrA-2s-4vj"/>
                                                 </connections>
@@ -75,6 +78,9 @@
                                                 <state key="normal" title="Sign In">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="signInButtonTapped:" destination="fDD-m2-zfn" eventType="touchUpInside" id="yal-sA-0E0"/>
                                                 </connections>
@@ -91,6 +97,9 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="googleButtonTapped:" destination="fDD-m2-zfn" eventType="touchUpInside" id="6ja-oQ-U8P"/>
                                         </connections>
@@ -104,6 +113,9 @@
                                         <state key="normal" title="   Sign in with Facebook" image="facebook-logo">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="10"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="facebookButtonTapped:" destination="fDD-m2-zfn" eventType="touchUpInside" id="GDc-Ja-7EJ"/>
                                         </connections>
@@ -135,7 +147,6 @@
                         <outlet property="facebookButton" destination="OPM-av-av3" id="ZC1-Ey-Dme"/>
                         <outlet property="googleButton" destination="jQi-6Q-clR" id="ODh-bD-Vbk"/>
                         <outlet property="passwordTextView" destination="oyC-4y-CQN" id="eat-Vq-Xhq"/>
-                        <segue destination="zE7-I4-Qex" kind="show" identifier="authenticatedSegue" id="jfv-DB-ynX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7gF-K7-fnF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -169,7 +180,7 @@
                 <navigationController id="LhM-FN-xk9" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="person" catalog="system" id="1oR-jD-aIV"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Koi-XW-vu6">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -185,7 +196,7 @@
             <objects>
                 <tableViewController id="TP1-4G-VfF" customClass="CharactersViewController" customModule="RickAndMorty" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Moi-b0-Nia">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -480,32 +491,19 @@
             </objects>
             <point key="canvasLocation" x="-328.98550724637681" y="-466.07142857142856"/>
         </scene>
-        <!--Favorites View Controller-->
-        <scene sceneID="TBX-qe-lCQ">
+        <!--Favorite View Controller-->
+        <scene sceneID="cDa-Od-HYq">
             <objects>
-                <tableViewController title="Favorites" id="2Xe-io-mli" userLabel="Favorites View Controller" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="J9e-qb-hHL">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                <viewController id="NgR-FV-bBi" userLabel="Favorite View Controller" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Si2-hm-2RY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavoriteTableViewCell" id="TkZ-fc-RJr">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TkZ-fc-RJr" id="QVq-BX-mb0">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="2Xe-io-mli" id="zsS-4J-pYr"/>
-                            <outlet property="delegate" destination="2Xe-io-mli" id="EYi-dc-ffd"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Rick and Morty Favorites" id="xAs-kn-xbm"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Jhq-VA-zLM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <viewLayoutGuide key="safeArea" id="CaA-sl-NZD"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Rick and Morty Favorites" id="Wbw-Th-PWo"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vcj-jC-IkA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1320" y="919"/>
         </scene>
@@ -515,7 +513,7 @@
                 <navigationController id="9yn-4b-i4p" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="gear" catalog="system" id="WzN-3y-hV1"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ay0-8f-PED">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -531,7 +529,7 @@
             <objects>
                 <tableViewController id="wwh-7J-QS1" userLabel="Settings Table View Controller" customClass="SettingsTableViewController" customModule="RickAndMorty" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="cVH-ga-Ko0">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
@@ -767,11 +765,11 @@
                 <navigationController id="ul7-my-fOv" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="heart" catalog="system" id="PdO-3O-DyS"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="eea-2p-cyH">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="2Xe-io-mli" kind="relationship" relationship="rootViewController" id="LTc-LR-vvw"/>
+                        <segue destination="NgR-FV-bBi" kind="relationship" relationship="rootViewController" id="b09-GY-NOH"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qsR-wf-TGA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -784,7 +782,7 @@
                 <navigationController id="n1G-3l-QZk" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="tv" catalog="system" id="SOQ-iO-GSd"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CmG-Om-eZT">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -800,7 +798,7 @@
             <objects>
                 <tableViewController id="oC2-qL-t3y" customClass="EpisodesViewController" customModule="RickAndMorty" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="f6n-cG-qrK">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
