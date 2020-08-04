@@ -48,10 +48,33 @@ class EpisodeDetailViewController: UIViewController {
     }
 
     fileprivate func loadEpisodeDetail() {
-        imageView.image = UIImage(named: "\(episode.episode).png")
+        imageView.image = UIImage(named: episode.episode)
         nameLabel.text = episode.name
         episodeLabel.text = episode.episode
         airDateLabel.text = episode.air_date
+        if episode.charactersData == nil {
+            episode.charactersData = []
+        }
+        for i in 0..<episode.characters.count {
+            episode.charactersData?.append(UIImage(named: "Placeholder")!.pngData()!)
+            RickAndMortyClient.getCharacter(id: nil, urlPath: episode.characters[i], index: i, completion: handleGetCharacterResponse(characterResponse:error:index:))
+        }
+    }
+    
+    func handleGetCharacterResponse(characterResponse: CharacterResponse?, error: Error?, index: Int?) {
+        guard let characterResponse = characterResponse else { return }
+        DispatchQueue.global(qos: .background).async { () -> Void in
+            RickAndMortyClient.getImage(path: characterResponse.image, index: index!, completionHandler: self.handleImagesResponse(image:error:index:))
+        }
+    }
+    
+    func handleImagesResponse(image: UIImage? , error: Error?, index: Int) {
+        if let image = image {
+            episode.charactersData?[index] = image.jpegData(compressionQuality: 1.0)!
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
     
     func configureCollection() {
@@ -114,21 +137,16 @@ extension EpisodeDetailViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CharacterCollectionViewCell", for: indexPath) as! CharacterCollectionViewCell
-        cell.imageView.image = UIImage(named: "Placeholder")
-        let characterURL = episode.characters[indexPath.row]
-        RickAndMortyClient.getCharacter(id: nil, urlPath: characterURL, completion: { (characterResponse, error) in
-            if let characterResponse = characterResponse {
-                RickAndMortyClient.getImage(path: characterResponse.image) { (data, error) in
-                    cell.imageView.image = UIImage(data: data!)
-                }
-            }
-        })
+        print("indexPath.row:  \(indexPath.row)")
+        if let characterData = episode.charactersData?[indexPath.row] {
+            cell.imageView.image = UIImage(data: characterData)
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let characterDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "CharacterDetailViewController") as! CharacterDetailViewController
-        RickAndMortyClient.getCharacter(id: nil, urlPath: episode.characters[indexPath.row], completion: { (characterResponse, error) in
+        RickAndMortyClient.getCharacter(id: nil, urlPath: episode.characters[indexPath.row], index: nil, completion: { (characterResponse, error, nil) in
             if let characterResponse = characterResponse {
                 characterDetailViewController.character = characterResponse
                 self.navigationController?.pushViewController(characterDetailViewController, animated: true)

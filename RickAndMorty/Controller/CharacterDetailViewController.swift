@@ -57,8 +57,10 @@ class CharacterDetailViewController: UIViewController {
             }
         }
         RickAndMortyClient.getImage(path: character.image) { (data, error) in
-            DispatchQueue.main.async {
-                self.characterImageView.image = UIImage(data: data!)
+            if let data = data {
+                DispatchQueue.main.async {
+                    self.characterImageView.image = UIImage(data: data)
+                }
             }
         }
     }

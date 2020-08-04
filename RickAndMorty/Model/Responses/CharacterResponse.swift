@@ -17,7 +17,8 @@ struct CharacterResponse: Codable {
     let gender: String
     let origin: OriginResponse
     let location: LocationResponse
-    let image: String
+    var image: String
+    var imageData: Data?
     let episode: [String]
     let url: String
     let created: String

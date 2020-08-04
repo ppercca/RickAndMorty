@@ -605,7 +605,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="z4l-28-hyR"/>
                     <connections>
-                        <outlet property="contentView" destination="3p9-CQ-liI" id="FM0-lS-QXy"/>
+                        <outlet property="closeSessionButton" destination="BlV-Qi-S7H" id="4hw-ty-uw0"/>
+                        <outlet property="contentView1" destination="3p9-CQ-liI" id="FM0-lS-QXy"/>
+                        <outlet property="contentView2" destination="8OJ-Rq-12Y" id="s7P-bj-m7a"/>
                         <outlet property="darkAppereanceLabel" destination="zsN-o2-Wue" id="swD-PA-RrO"/>
                         <outlet property="switchValue" destination="F0c-KW-avH" id="e5u-28-P6z"/>
                         <outlet property="tableViewCell" destination="hu6-TC-IdB" id="IVw-aC-hfp"/>

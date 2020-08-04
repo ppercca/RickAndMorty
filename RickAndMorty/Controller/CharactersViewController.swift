@@ -31,12 +31,35 @@ class CharactersViewController: UITableViewController {
     }
     
     func handleGetCharactersResponse(charactersResponse: CharactersResponse?, error: Error?) {
+        guard var charactersResponse = charactersResponse else { return }
+        for i in 0..<charactersResponse.results.count {
+            charactersResponse.results[i].imageData = UIImage(named: "Placeholder")!.pngData()!
+        }
         if RickAndMortyModel.characters == nil {
             RickAndMortyModel.characters = charactersResponse
         } else {
-            RickAndMortyModel.characters?.results.append(contentsOf: charactersResponse!.results)
+            RickAndMortyModel.characters?.results.append(contentsOf: charactersResponse.results)
         }
-        tableView.reloadData()
+        DispatchQueue.global(qos: .background).async { () -> Void in
+            self.loadImages(characters: charactersResponse.results, count: (RickAndMortyModel.characters?.results.count)!)
+        }
+    }
+    
+    func loadImages(characters: [CharacterResponse], count: Int){
+        var i = 0
+        for character in characters {
+            RickAndMortyClient.getImage(path: character.image, index: (count - 20) + i, completionHandler: handleImagesResponse(image:error:index:))
+            i += 1
+        }
+    }
+    
+    func handleImagesResponse(image: UIImage? , error: Error?, index: Int) {
+        if let image = image {
+            RickAndMortyModel.characters?.results[index].imageData = image.jpegData(compressionQuality: 1.0)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -54,12 +77,10 @@ class CharactersViewController: UITableViewController {
         } else {
             configureCellLightMode(cell: cell)
         }
+        cell.characterImageView.image = UIImage(named: "Placeholder")
         if let character = RickAndMortyModel.characters?.results[indexPath.row] {
-            RickAndMortyClient.getImage(path: character.image) { (data, error) in
-                cell.characterImageView.image = UIImage(data: data!)
-
-            }
-            cell.nameLabel.text = character.name
+            cell.characterImageView.image = UIImage(data: character.imageData!)
+            cell.nameLabel.text = "\(character.id)" + character.name
             cell.statusLabel.text = "\(Utils.statusIcon(status: character.status)) \(character.status) - \(character.species)"
             cell.lastKnownLocationLabel.text = character.location.name
             RickAndMortyClient.getEpisode(id: nil, urlPath: character.episode[0]) { (edpisodeResponse, error) in
@@ -73,7 +94,7 @@ class CharactersViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let count = RickAndMortyModel.characters?.results.count, let infoCount = RickAndMortyModel.characters?.info.count else { return }
-        if indexPath.row == count - 1 {
+        if indexPath.row == (count - 1) {
             if count < infoCount {
                 page += 1
                 RickAndMortyClient.getCharacters(page: page, completion: handleGetCharactersResponse(charactersResponse:error:))

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class RickAndMortyClient {
     
@@ -46,7 +47,7 @@ class RickAndMortyClient {
         }
     }
     
-    class func getCharacter(id: Int?, urlPath: String?, completion: @escaping (CharacterResponse?, Error?) -> Void) {
+    class func getCharacter(id: Int?, urlPath: String?, index: Int?, completion: @escaping (CharacterResponse?, Error?, Int?) -> Void) {
         let url: URL
         if let urlPath = urlPath {
             url =  URL(string: urlPath)!
@@ -55,9 +56,9 @@ class RickAndMortyClient {
         }
         taskForGETRequest(url: url, responseType: CharacterResponse.self) { (response, error) in
             if let response = response {
-                completion(response, nil)
+                completion(response, nil, index)
             } else {
-                completion(nil, error)
+                completion(nil, error, nil)
             }
         }
     }
@@ -66,6 +67,7 @@ class RickAndMortyClient {
         taskForGETRequest(url: Endpoints.getEpisodes(page).url, responseType: EpisodesResponse.self) { (response, error) in
             if let response = response {
                 completion(response, nil)
+                
             } else {
                 completion(nil, error)
             }
@@ -109,6 +111,17 @@ class RickAndMortyClient {
 //        return task
 //    }
     
+    class func getImage(path: String, index: Int, completionHandler: @escaping (UIImage?, Error?, Int) -> Void) {
+        let task = URLSession.shared.dataTask(with: URL(string: path)!, completionHandler: { (data, response, error) in
+            guard let data = data else {
+                completionHandler(nil, error, index)
+                return
+            }
+            let downloadImage = UIImage(data: data)
+            completionHandler(downloadImage, nil, index)
+        })
+        task.resume()
+    }
     
     class func getImage(path: String, completion: @escaping (Data?, Error?) -> Void) {
         let task = URLSession.shared.dataTask(with: URL(string: path)!) { data, response, error in
@@ -120,7 +133,7 @@ class RickAndMortyClient {
     }
     
     @discardableResult class func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, completion: @escaping (ResponseType?, Error?) -> Void) -> URLSessionTask {
-        print(url.absoluteString)
+//        print(url.absoluteString)
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data else {
                 DispatchQueue.main.async {

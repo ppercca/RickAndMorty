@@ -14,6 +14,7 @@ struct EpisodeResponse: Codable {
     let air_date: String
     let episode: String
     let characters: [String]
+    var charactersData: [Data]?
     let url: String
     let created: String
 }

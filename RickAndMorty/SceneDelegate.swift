@@ -50,19 +50,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        guard let url = URLContexts.first?.url else { return }
-        ApplicationDelegate.shared.application( UIApplication.shared, open: url, sourceApplication: nil, annotation: [UIApplication.OpenURLOptionsKey.annotation] )
+        guard let context = URLContexts.first else { return }
+        ApplicationDelegate.shared.application( UIApplication.shared, open: context.url, sourceApplication: context.options.sourceApplication, annotation: context.options.annotation )
         
     }
 
-
 }
-//
-//
-// AppDelegate.swift import UIKit import FBSDKCoreKit
-//@UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
-// }
-//
-
 
 

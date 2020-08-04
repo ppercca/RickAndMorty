@@ -14,9 +14,11 @@ import FacebookLogin
 
 class SettingsTableViewController: UITableViewController {
     
-    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var contentView1: UIView!
+    @IBOutlet weak var contentView2: UIView!
     @IBOutlet weak var tableViewCell: UITableViewCell!
     @IBOutlet weak var darkAppereanceLabel: UILabel!
+    @IBOutlet weak var closeSessionButton: UIButton!
     @IBOutlet weak var switchValue: UISwitch!
     var darkMode: Bool = false
     
@@ -56,6 +58,7 @@ class SettingsTableViewController: UITableViewController {
         }
         UserDefaults.standard.removeObject(forKey: "AuthenticatorProvider")
         UserDefaults.standard.removeObject(forKey: "EmailAuthenticated")
+        UserDefaults.standard.synchronize()
         let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "AuthViewController") as! AuthViewController
         loginViewController.modalPresentationStyle = .fullScreen
         loginViewController.modalTransitionStyle = .crossDissolve
@@ -64,8 +67,10 @@ class SettingsTableViewController: UITableViewController {
     
     func configureDarkMode()  {
         tableView.backgroundColor = UIColor(named: "DarkBackground1")
-        contentView.backgroundColor = UIColor(named: "DarkBackground2")
+        contentView1.backgroundColor = UIColor(named: "DarkBackground2")
+        contentView2.backgroundColor = UIColor(named: "DarkBackground2")
         darkAppereanceLabel.textColor = UIColor(named: "DarkValue")
+        closeSessionButton.titleLabel?.textColor = UIColor(named: "DarkValue")
         let header = tableView.headerView(forSection: 0)
         header?.tintColor = UIColor(named: "DarkBackground1")
         header?.textLabel?.textColor = UIColor(named: "DarkLabel")
@@ -75,8 +80,10 @@ class SettingsTableViewController: UITableViewController {
     
     func configureLightMode()  {
         tableView.backgroundColor = UIColor(named: "LightBackground1")
-        contentView.backgroundColor = UIColor(named: "LightBackground2")
+        contentView1.backgroundColor = UIColor(named: "LightBackground2")
+        contentView2.backgroundColor = UIColor(named: "LightBackground2")
         darkAppereanceLabel.textColor = UIColor(named: "LightValue")
+        closeSessionButton.titleLabel?.textColor = UIColor(named: "LightValue")
         let header = tableView.headerView(forSection: 0)
         header?.tintColor = UIColor(named: "LightBackground1")
         header?.textLabel?.textColor = UIColor(named: "LightLabel")
