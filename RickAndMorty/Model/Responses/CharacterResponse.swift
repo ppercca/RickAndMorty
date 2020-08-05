@@ -15,11 +15,13 @@ struct CharacterResponse: Codable {
     let species: String
     let type: String
     let gender: String
-    let origin: OriginResponse
-    let location: LocationResponse
+    let origin: OriginResponse?
+    let location: LocationResponse?
+    let locationName: String?
     var image: String
     var imageData: Data?
     let episode: [String]
+    var episodePath: String?
     let url: String
     let created: String
 }

@@ -11,7 +11,7 @@ import UIKit
 class CharactersViewController: UITableViewController {
 
     var page: Int = 1
-     var darkMode: Bool = false
+    var darkMode: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,9 +80,9 @@ class CharactersViewController: UITableViewController {
         cell.characterImageView.image = UIImage(named: "Placeholder")
         if let character = RickAndMortyModel.characters?.results[indexPath.row] {
             cell.characterImageView.image = UIImage(data: character.imageData!)
-            cell.nameLabel.text = "\(character.id)" + character.name
+            cell.nameLabel.text = character.name
             cell.statusLabel.text = "\(Utils.statusIcon(status: character.status)) \(character.status) - \(character.species)"
-            cell.lastKnownLocationLabel.text = character.location.name
+            cell.lastKnownLocationLabel.text = character.location?.name
             RickAndMortyClient.getEpisode(id: nil, urlPath: character.episode[0]) { (edpisodeResponse, error) in
                 if let edpisodeResponse = edpisodeResponse {
                     cell.firstSeenLocationLabel.text = edpisodeResponse.name

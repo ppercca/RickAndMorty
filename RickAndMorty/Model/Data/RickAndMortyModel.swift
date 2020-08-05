@@ -12,5 +12,4 @@ class RickAndMortyModel {
     
     static var characters: CharactersResponse? = nil
     static var episodes: EpisodesResponse? = nil
-    
 }

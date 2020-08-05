@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class CharacterDetailViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
@@ -20,13 +21,18 @@ class CharacterDetailViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var characterImageView: UIImageView!
+    @IBOutlet weak var favoriteButton: UIButton!
     var character: CharacterResponse!
     var darkMode: Bool = false
+    var favorite: Bool = false
+    var authenticatedEmail: String!
+    var collectionReference : CollectionReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureDatabase()
+        favoriteButton.tintColor = UIColor.gray
         loadCharacterDetail()
-        navigationController?.setToolbarHidden(true, animated: false)
         contentView.layer.cornerRadius = 10
         contentView.clipsToBounds = true
     }
@@ -47,10 +53,27 @@ class CharacterDetailViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
     
+    func configureDatabase() {
+        if let authenticatedEmail = UserDefaults.standard.string(forKey: "EmailAuthenticated") {
+            print("Authenticated User: \(authenticatedEmail)")
+            collectionReference = Firestore.firestore().collection("\(authenticatedEmail)-favoriteCaracters")
+            collectionReference.document("\(character.id)").getDocument { (document, error) in
+                if let document = document, document.exists {
+                    let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                    print("Document data: \(dataDescription)")
+                    self.favorite = true
+                    self.favoriteButton.tintColor = UIColor.yellow
+                } else {
+                    print("Document does not exist")
+                }
+            }
+        }
+    }
+    
     fileprivate func loadCharacterDetail() {
         nameLabel.text = character.name
         statusLabel.text = "\(Utils.statusIcon(status: character.status)) \(character.status) - \(character.species)  \(Utils.genderIcon(gender: character.gender))"
-        lastKnownLocationLabel.text = character.location.name
+        lastKnownLocationLabel.text = character.location!.name
         RickAndMortyClient.getEpisode(id: nil, urlPath: character.episode[0]) { (edpisodeResponse, error) in
             if let edpisodeResponse = edpisodeResponse {
                 self.firstSeenLocationLabel.text = edpisodeResponse.name
@@ -58,6 +81,7 @@ class CharacterDetailViewController: UIViewController {
         }
         RickAndMortyClient.getImage(path: character.image) { (data, error) in
             if let data = data {
+                self.character.imageData = data
                 DispatchQueue.main.async {
                     self.characterImageView.image = UIImage(data: data)
                 }
@@ -65,6 +89,44 @@ class CharacterDetailViewController: UIViewController {
         }
     }
     
+    @IBAction func favoriteButtonTapped(_ sender: Any) {
+        if favorite {
+            collectionReference.document("\(character.id)").delete { (error) in
+                self.favorite = false
+                print("Removing: \(self.character.id)")
+                DispatchQueue.main.async {
+                    self.favoriteButton.tintColor = UIColor.gray
+                }
+            }
+        } else {
+            if let image = characterImageView.image {
+                Utils.storeImage(image: image, forKey: "\(character.name)")
+            }
+            collectionReference.document("\(character.id)").setData(
+                ["id": character.id,
+                "name": character.name,
+                "status": character.status,
+                "species": character.species,
+                "type": character.type,
+                "gender": character.gender,
+                "locationName": character.location!.name,
+                "image": character.image,
+                "episodePath": character.episode[0],
+                "url": character.url,
+                "created": character.created,
+                ]) { (error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    print("Storing: \(self.character.id)")
+                    self.favorite = true
+                    DispatchQueue.main.async {
+                        self.favoriteButton.tintColor = UIColor.yellow
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension CharacterDetailViewController: UITableViewDelegate, UITableViewDataSource {

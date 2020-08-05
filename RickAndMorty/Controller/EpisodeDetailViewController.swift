@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class EpisodeDetailViewController: UIViewController {
     
@@ -20,11 +21,17 @@ class EpisodeDetailViewController: UIViewController {
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var episodes: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton!
     var episode: EpisodeResponse!
     var darkMode: Bool = false
+    var favorite: Bool = false
+    var authenticatedEmail: String!
+    var collectionReference : CollectionReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureDatabase()
+        favoriteButton.tintColor = UIColor.gray
         loadEpisodeDetail()
         configureCollection()
         contentView.layer.cornerRadius = 10
@@ -47,6 +54,22 @@ class EpisodeDetailViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
 
+    func configureDatabase() {
+        if let authenticatedEmail = UserDefaults.standard.string(forKey: "EmailAuthenticated") {
+            collectionReference = Firestore.firestore().collection("\(authenticatedEmail)-favoriteEpisodes")
+            collectionReference.document("\(episode.id)").getDocument { (document, error) in
+                if let document = document, document.exists {
+                    let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                    print("Document data: \(dataDescription)")
+                    self.favorite = true
+                    self.favoriteButton.tintColor = UIColor.yellow
+                } else {
+                    print("Document does not exist")
+                }
+            }
+        }
+    }
+    
     fileprivate func loadEpisodeDetail() {
         imageView.image = UIImage(named: episode.episode)
         nameLabel.text = episode.name
@@ -81,6 +104,38 @@ class EpisodeDetailViewController: UIViewController {
         flowLayout.minimumInteritemSpacing = 3.0
         flowLayout.minimumLineSpacing = 3.0
     }
+    
+    @IBAction func favoriteButtonTapped(_ sender: Any) {
+        if favorite {
+            collectionReference.document("\(episode.id)").delete { (error) in
+                self.favorite = false
+                print("Removing: \(self.episode.id)")
+                DispatchQueue.main.async {
+                    self.favoriteButton.tintColor = UIColor.gray
+                }
+            }
+        } else {
+            collectionReference.document("\(episode.id)").setData(
+                ["id": episode.id,
+                "name": episode.name,
+                "airDate": episode.air_date,
+                "episode": episode.episode,
+                "url": episode.url,
+                "created": episode.created,
+                ]) { (error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    print("Storing: \(self.episode.id)")
+                    self.favorite = true
+                    DispatchQueue.main.async {
+                        self.favoriteButton.tintColor = UIColor.yellow
+                    }
+                }
+            }
+        }
+    }
+    
     
 //    @objc func rotateScreen () {
 //        var width = view.frame.size.width

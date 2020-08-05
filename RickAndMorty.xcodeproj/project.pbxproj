@@ -311,6 +311,10 @@
 		5223A98524D1E0E9003B33B7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					charactersTab,
+					charactersTableView,
+				);
 				LastSwiftUpdateCheck = 1160;
 				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = Innovatrix;
