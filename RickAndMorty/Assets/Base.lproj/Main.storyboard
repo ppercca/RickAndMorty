@@ -178,7 +178,7 @@
         <scene sceneID="tUi-89-4BC">
             <objects>
                 <navigationController id="LhM-FN-xk9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="person" catalog="system" id="1oR-jD-aIV"/>
+                    <tabBarItem key="tabBarItem" title="" image="person.fill" catalog="system" id="1oR-jD-aIV"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Koi-XW-vu6">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -782,7 +782,7 @@
         <scene sceneID="PL7-rT-6gp">
             <objects>
                 <navigationController id="ul7-my-fOv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="heart" catalog="system" id="PdO-3O-DyS"/>
+                    <tabBarItem key="tabBarItem" title="" image="star.fill" catalog="system" id="PdO-3O-DyS"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="eea-2p-cyH">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -803,8 +803,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorite Characters:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SWw-SY-9Zx">
+                                <rect key="frame" x="10" y="88" width="394" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="PVt-G1-1Mm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VDd-AB-1R6" userLabel="Table View 1">
-                                <rect key="frame" x="0.0" y="88" width="414" height="362.5"/>
+                                <rect key="frame" x="0.0" y="118" width="414" height="332.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CharacterTableViewCell" id="EEv-eU-x9J" customClass="CharacterTableViewCell" customModule="RickAndMorty" customModuleProvider="target">
@@ -925,8 +934,17 @@
                                     <outlet property="delegate" destination="LOw-wD-ben" id="305-uN-kAU"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorite Episodes:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mOh-DK-6E2">
+                                <rect key="frame" x="10" y="450.5" width="394" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="E5L-ah-SeV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4ei-XJ-gWp" userLabel="Table View 2">
-                                <rect key="frame" x="0.0" y="450.5" width="414" height="362.5"/>
+                                <rect key="frame" x="0.0" y="480.5" width="414" height="332.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EpisodeTableViewCell" rowHeight="148" id="Tw9-2Y-qZR" customClass="EpisodeTableViewCell" customModule="RickAndMorty" customModuleProvider="target">
@@ -1022,13 +1040,19 @@ Label</string>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="4ei-XJ-gWp" firstAttribute="leading" secondItem="THj-jZ-Q5I" secondAttribute="leading" id="1yG-gq-uxR"/>
+                            <constraint firstItem="mOh-DK-6E2" firstAttribute="top" secondItem="THj-jZ-Q5I" secondAttribute="centerY" id="B5l-7o-wIF"/>
+                            <constraint firstItem="SWw-SY-9Zx" firstAttribute="centerX" secondItem="0Cu-7o-uxl" secondAttribute="centerX" id="JoA-eY-Vin"/>
+                            <constraint firstItem="mOh-DK-6E2" firstAttribute="centerX" secondItem="0Cu-7o-uxl" secondAttribute="centerX" id="K8C-Fa-beL"/>
                             <constraint firstItem="VDd-AB-1R6" firstAttribute="leading" secondItem="THj-jZ-Q5I" secondAttribute="leading" id="NaU-Wv-ooK"/>
                             <constraint firstItem="THj-jZ-Q5I" firstAttribute="bottom" secondItem="4ei-XJ-gWp" secondAttribute="bottom" id="QRY-fX-qlz"/>
                             <constraint firstItem="THj-jZ-Q5I" firstAttribute="trailing" secondItem="VDd-AB-1R6" secondAttribute="trailing" id="WG7-lz-gTf"/>
+                            <constraint firstItem="SWw-SY-9Zx" firstAttribute="leading" secondItem="THj-jZ-Q5I" secondAttribute="leading" constant="10" id="Y79-I2-oRM"/>
                             <constraint firstItem="THj-jZ-Q5I" firstAttribute="centerY" secondItem="VDd-AB-1R6" secondAttribute="bottom" id="biq-TN-1ce"/>
-                            <constraint firstItem="4ei-XJ-gWp" firstAttribute="top" secondItem="VDd-AB-1R6" secondAttribute="bottom" id="scm-Gz-pvh"/>
+                            <constraint firstItem="mOh-DK-6E2" firstAttribute="leading" secondItem="THj-jZ-Q5I" secondAttribute="leading" constant="10" id="fGh-gg-04H"/>
+                            <constraint firstItem="4ei-XJ-gWp" firstAttribute="top" secondItem="mOh-DK-6E2" secondAttribute="bottom" id="jwI-Jb-mMN"/>
+                            <constraint firstItem="SWw-SY-9Zx" firstAttribute="top" secondItem="THj-jZ-Q5I" secondAttribute="top" id="ty3-jf-fda"/>
                             <constraint firstItem="THj-jZ-Q5I" firstAttribute="trailing" secondItem="4ei-XJ-gWp" secondAttribute="trailing" id="vz4-5J-PeJ"/>
-                            <constraint firstItem="VDd-AB-1R6" firstAttribute="top" secondItem="THj-jZ-Q5I" secondAttribute="top" id="yAZ-70-2yz"/>
+                            <constraint firstItem="VDd-AB-1R6" firstAttribute="top" secondItem="SWw-SY-9Zx" secondAttribute="bottom" id="yAZ-70-2yz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="THj-jZ-Q5I"/>
                     </view>
@@ -1036,6 +1060,8 @@ Label</string>
                     <connections>
                         <outlet property="charactersTableView" destination="VDd-AB-1R6" id="uDJ-Cq-RRy"/>
                         <outlet property="episodesTableView" destination="4ei-XJ-gWp" id="biD-7T-4HZ"/>
+                        <outlet property="favoriteCharactersLabel" destination="SWw-SY-9Zx" id="EhI-UO-RYN"/>
+                        <outlet property="favoriteEpisodesLabel" destination="mOh-DK-6E2" id="x10-1v-prq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3yp-Gx-8Dx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1046,7 +1072,7 @@ Label</string>
         <scene sceneID="0k7-Yy-Hkj">
             <objects>
                 <navigationController id="n1G-3l-QZk" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="tv" catalog="system" id="SOQ-iO-GSd"/>
+                    <tabBarItem key="tabBarItem" title="" image="tv.fill" catalog="system" id="SOQ-iO-GSd"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CmG-Om-eZT">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1172,9 +1198,9 @@ Label</string>
         <image name="fav_star" width="25" height="23.5"/>
         <image name="gear" catalog="system" width="128" height="119"/>
         <image name="google-logo" width="30" height="30"/>
-        <image name="heart" catalog="system" width="128" height="109"/>
         <image name="logo" width="1280" height="544"/>
-        <image name="person" catalog="system" width="128" height="117"/>
-        <image name="tv" catalog="system" width="128" height="93"/>
+        <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
+        <image name="tv.fill" catalog="system" width="128" height="93"/>
     </resources>
 </document>

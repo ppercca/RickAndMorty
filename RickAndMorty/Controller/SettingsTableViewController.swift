@@ -24,6 +24,10 @@ class SettingsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         darkMode = UserDefaults.standard.bool(forKey: "isDarkModeEnabled")
         switchValue.isOn = darkMode
         if darkMode {
@@ -70,7 +74,9 @@ class SettingsTableViewController: UITableViewController {
         contentView1.backgroundColor = UIColor(named: "DarkBackground2")
         contentView2.backgroundColor = UIColor(named: "DarkBackground2")
         darkAppereanceLabel.textColor = UIColor(named: "DarkValue")
-        closeSessionButton.titleLabel?.textColor = UIColor(named: "DarkValue")
+        DispatchQueue.main.async {
+            self.closeSessionButton.titleLabel?.textColor = UIColor(named: "DarkValue")
+        }
         let header = tableView.headerView(forSection: 0)
         header?.tintColor = UIColor(named: "DarkBackground1")
         header?.textLabel?.textColor = UIColor(named: "DarkLabel")
@@ -83,7 +89,9 @@ class SettingsTableViewController: UITableViewController {
         contentView1.backgroundColor = UIColor(named: "LightBackground2")
         contentView2.backgroundColor = UIColor(named: "LightBackground2")
         darkAppereanceLabel.textColor = UIColor(named: "LightValue")
-        closeSessionButton.titleLabel?.textColor = UIColor(named: "LightValue")
+        DispatchQueue.main.async {
+            self.closeSessionButton.titleLabel?.textColor = UIColor(named: "LightValue")
+        }
         let header = tableView.headerView(forSection: 0)
         header?.tintColor = UIColor(named: "LightBackground1")
         header?.textLabel?.textColor = UIColor(named: "LightLabel")

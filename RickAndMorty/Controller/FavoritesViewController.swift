@@ -13,6 +13,8 @@ import Firebase
 class FavoritesViewController: UIViewController {
     @IBOutlet weak var charactersTableView: UITableView!
     @IBOutlet weak var episodesTableView: UITableView!
+    @IBOutlet weak var favoriteCharactersLabel: UILabel!
+    @IBOutlet weak var favoriteEpisodesLabel: UILabel!
     var darkMode: Bool = false
     var authenticatedEmail: String!
     var charactersCollectionReference : CollectionReference!
@@ -33,6 +35,7 @@ class FavoritesViewController: UIViewController {
             charactersCollectionReference.getDocuments { (snapshot, error) in
                 if let snapshot = snapshot {
                     for document in snapshot.documents {
+                        print("\(document.documentID) => \(document.data())")
                         let characterResponse = CharacterResponse(
                             id: document.data()["id"] as! Int,
                             name: document.data()["name"] as! String,
@@ -41,11 +44,11 @@ class FavoritesViewController: UIViewController {
                             type: document.data()["type"] as! String,
                             gender: document.data()["gender"] as! String,
                             origin: nil,
-                            location: nil,
+                            location: LocationResponse(id: nil, name: (document.data()["locationName"] as? String)!, type: nil, dimension: nil, residents: nil, url: "", created: nil),
                             locationName: document.data()["locationName"] as? String,
                             image: document.data()["image"] as! String,
                             imageData: nil,
-                            episode: [],
+                            episode: document.data()["episode"] as! [String],
                             episodePath: document.data()["episodePath"] as? String,
                             url: document.data()["url"] as! String,
                             created: document.data()["created"] as! String)
@@ -65,7 +68,7 @@ class FavoritesViewController: UIViewController {
                             name: document.data()["name"] as! String,
                             air_date: document.data()["airDate"] as! String,
                             episode: document.data()["episode"] as! String,
-                            characters: [],
+                            characters: document.data()["characters"] as! [String],
                             charactersData: nil,
                             url: document.data()["url"] as! String,
                             created: document.data()["created"] as! String)
@@ -165,13 +168,19 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
 extension FavoritesViewController {
     
     func configureDarkMode() {
+        view.backgroundColor = UIColor(named: "DarkBackground1")
         charactersTableView.backgroundColor = UIColor(named: "DarkBackground1")
         episodesTableView.backgroundColor = UIColor(named: "DarkBackground1")
+        favoriteCharactersLabel.textColor = UIColor(named: "DarkValue")
+        favoriteEpisodesLabel.textColor = UIColor(named: "DarkValue")
     }
     
     func configureLightMode() {
+        view.backgroundColor = UIColor(named: "LightBackground1")
         charactersTableView.backgroundColor = UIColor(named: "LightBackground1")
         episodesTableView.backgroundColor = UIColor(named: "LightBackground1")
+        favoriteCharactersLabel.textColor = UIColor(named: "LightValue")
+        favoriteEpisodesLabel.textColor = UIColor(named: "LightValue")
     }
     
     func configureTableCellDarkMode(cell: UITableViewCell, tag: Int) {

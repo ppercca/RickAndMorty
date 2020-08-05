@@ -62,7 +62,7 @@ class CharacterDetailViewController: UIViewController {
                     let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
                     print("Document data: \(dataDescription)")
                     self.favorite = true
-                    self.favoriteButton.tintColor = UIColor.yellow
+                    self.favoriteButton.tintColor = UIColor(red: 0.9882352941, green: 0.7607843137, blue: 0, alpha: 1)
                 } else {
                     print("Document does not exist")
                 }
@@ -112,6 +112,7 @@ class CharacterDetailViewController: UIViewController {
                 "locationName": character.location!.name,
                 "image": character.image,
                 "episodePath": character.episode[0],
+                "episode": character.episode,
                 "url": character.url,
                 "created": character.created,
                 ]) { (error) in
@@ -121,7 +122,7 @@ class CharacterDetailViewController: UIViewController {
                     print("Storing: \(self.character.id)")
                     self.favorite = true
                     DispatchQueue.main.async {
-                        self.favoriteButton.tintColor = UIColor.yellow
+                        self.favoriteButton.tintColor = UIColor(red: 0.9882352941, green: 0.7607843137, blue: 0, alpha: 1)
                     }
                 }
             }
