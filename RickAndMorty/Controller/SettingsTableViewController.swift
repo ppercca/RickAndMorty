@@ -37,6 +37,21 @@ class SettingsTableViewController: UITableViewController {
         }
     }
     
+    // MARK: - Dark Mode Method
+    
+    @IBAction func swithMode(_ sender: Any) {
+        if switchValue.isOn {
+            UserDefaults.standard.set(true, forKey: "isDarkModeEnabled")
+            configureDarkMode()
+        } else {
+            UserDefaults.standard.set(false, forKey: "isDarkModeEnabled")
+            configureLightMode()
+        }
+        darkMode = switchValue.isOn
+    }
+    
+    // MARK: - SignOut Methods
+    
     @IBAction func closeSessionButtonTapped(_ sender: Any) {
         let refreshAlert = UIAlertController(title: "Sign Out", message: "Are you sure that you want to sign out?", preferredStyle: UIAlertController.Style.alert)
         refreshAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
@@ -63,42 +78,22 @@ class SettingsTableViewController: UITableViewController {
         do {
             try Auth.auth().signOut()
         } catch  {
-            //
         }
         UserDefaults.standard.removeObject(forKey: "AuthenticatorProvider")
         UserDefaults.standard.removeObject(forKey: "EmailAuthenticated")
+        UserDefaults.standard.removeObject(forKey: "ImageCache")
         UserDefaults.standard.synchronize()
         let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "AuthViewController") as! AuthViewController
         loginViewController.modalPresentationStyle = .fullScreen
         loginViewController.modalTransitionStyle = .crossDissolve
         self.present(loginViewController, animated: true, completion: nil)
     }
-    
-    func configureDarkMode()  {
-        tableView.backgroundColor = UIColor(named: "DarkBackground1")
-        contentView1.backgroundColor = UIColor(named: "DarkBackground2")
-        contentView2.backgroundColor = UIColor(named: "DarkBackground2")
-        darkAppereanceLabel.textColor = UIColor(named: "DarkValue")
-        closeSessionButton.setTitleColor(UIColor(named: "DarkValue"), for: .normal)
-        let header = tableView.headerView(forSection: 0)
-        header?.tintColor = UIColor(named: "DarkBackground1")
-        header?.textLabel?.textColor = UIColor(named: "DarkLabel")
-        let footer = tableView.footerView(forSection: 0)
-        footer?.tintColor = UIColor(named: "DarkBackground1")
-     }
-    
-    func configureLightMode()  {
-        tableView.backgroundColor = UIColor(named: "LightBackground1")
-        contentView1.backgroundColor = UIColor(named: "LightBackground2")
-        contentView2.backgroundColor = UIColor(named: "LightBackground2")
-        darkAppereanceLabel.textColor = UIColor(named: "LightValue")
-        closeSessionButton.setTitleColor(UIColor(named: "LightValue"), for: .normal)
-        let header = tableView.headerView(forSection: 0)
-        header?.tintColor = UIColor(named: "LightBackground1")
-        header?.textLabel?.textColor = UIColor(named: "LightLabel")
-        let footer = tableView.footerView(forSection: 0)
-        footer?.tintColor = UIColor(named: "LightBackground1")
-    }
+
+}
+
+// MARK: - Dark and Light Mode Methods
+
+extension SettingsTableViewController {
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if darkMode {
@@ -118,15 +113,36 @@ class SettingsTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func swithMode(_ sender: Any) {
-        if switchValue.isOn {
-            UserDefaults.standard.set(true, forKey: "isDarkModeEnabled")
-            configureDarkMode()
-        } else {
-            UserDefaults.standard.set(false, forKey: "isDarkModeEnabled")
-            configureLightMode()
-        }
-        darkMode = switchValue.isOn
+    
+    func configureDarkMode()  {
+        tableView.backgroundColor = UIColor(named: "DarkBackground1")
+        contentView1.backgroundColor = UIColor(named: "DarkBackground2")
+        contentView2.backgroundColor = UIColor(named: "DarkBackground2")
+        darkAppereanceLabel.textColor = UIColor(named: "DarkValue")
+        closeSessionButton.setTitleColor(UIColor(named: "DarkValue"), for: .normal)
+        tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.backgroundColor  = UIColor(named: "DarkBackground1")
+        tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.backgroundColor  = UIColor(named: "DarkBackground1")
+        let header = tableView.headerView(forSection: 0)
+        header?.tintColor = UIColor(named: "DarkBackground1")
+        header?.textLabel?.textColor = UIColor(named: "DarkLabel")
+        let footer = tableView.footerView(forSection: 0)
+        footer?.tintColor = UIColor(named: "DarkBackground1")
+     }
+    
+    func configureLightMode()  {
+        tableView.backgroundColor = UIColor(named: "LightBackground1")
+        contentView1.backgroundColor = UIColor(named: "LightBackground2")
+        contentView2.backgroundColor = UIColor(named: "LightBackground2")
+        darkAppereanceLabel.textColor = UIColor(named: "LightValue")
+        closeSessionButton.setTitleColor(UIColor(named: "LightValue"), for: .normal)
+        tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.backgroundColor  = UIColor(named: "LightBackground1")
+        tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.backgroundColor  = UIColor(named: "LightBackground1")
+        let header = tableView.headerView(forSection: 0)
+        header?.tintColor = UIColor(named: "LightBackground1")
+        header?.textLabel?.textColor = UIColor(named: "LightLabel")
+        let footer = tableView.footerView(forSection: 0)
+        footer?.tintColor = UIColor(named: "LightBackground1")
     }
     
 }
+

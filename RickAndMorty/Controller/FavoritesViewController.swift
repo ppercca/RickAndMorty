@@ -28,6 +28,24 @@ class FavoritesViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureDatabase()
+        navigationController?.setToolbarHidden(true, animated: false)
+        darkMode = UserDefaults.standard.bool(forKey: "isDarkModeEnabled")
+        if darkMode {
+            configureDarkMode()
+            charactersTableView.reloadData()
+            episodesTableView.reloadData()
+        } else {
+            configureLightMode()
+            charactersTableView.reloadData()
+            episodesTableView.reloadData()
+        }
+    }
+    
+    // MARK: - Firestore Method to retrieve Favorite Characters and Episodes
+    
     func configureDatabase() {
         favoriteCharactersActivityIndicator.startAnimating()
         favoriteEpisodesActivityIndicator.startAnimating()
@@ -88,23 +106,9 @@ class FavoritesViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureDatabase()
-        navigationController?.setToolbarHidden(true, animated: false)
-        darkMode = UserDefaults.standard.bool(forKey: "isDarkModeEnabled")
-        if darkMode {
-            configureDarkMode()
-            charactersTableView.reloadData()
-            episodesTableView.reloadData()
-        } else {
-            configureLightMode()
-            charactersTableView.reloadData()
-            episodesTableView.reloadData()
-        }
-    }
-    
 }
+
+// MARK: - Table Views Methods
 
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
 
@@ -130,7 +134,9 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 configureCellLightMode(cell: cell)
             }
-            cell.characterImageView.image = Utils.retrieveImage(forKey: favoriteCharacters[indexPath.row].name)
+            RickAndMortyClient.getImage(urlString: favoriteCharacters[indexPath.row].image, index: indexPath.row) { (image, error, index) in
+                cell.characterImageView.image = image
+            }
             cell.nameLabel.text = favoriteCharacters[indexPath.row].name
             cell.statusLabel.text = "\(Utils.statusIcon(status: favoriteCharacters[indexPath.row].status)) \(favoriteCharacters[indexPath.row].status) - \(favoriteCharacters[indexPath.row].species)"
             cell.lastKnownLocationLabel.text = favoriteCharacters[indexPath.row].locationName
@@ -166,10 +172,11 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
             episodeDetailViewController.episode = favoriteEpisodes[indexPath.row]
             self.navigationController?.pushViewController(episodeDetailViewController, animated: true)
         }
-        
     }
     
 }
+
+// MARK: - Dark and Light Mode Methods
 
 extension FavoritesViewController {
     

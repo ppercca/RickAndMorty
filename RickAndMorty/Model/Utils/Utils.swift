@@ -39,6 +39,11 @@ class Utils {
         }
     }
     
+    class func generateKey(url: String) -> String{
+        let splitedURL = url.split(separator: "/")
+        return "\(splitedURL[splitedURL.count - 2])_\(splitedURL[splitedURL.count - 1].replacingOccurrences(of: ".jpeg", with: ""))"
+    }
+    
     class func filePath(forKey key: String) -> URL? {
         let fileManager = FileManager.default
         guard let documentURL = fileManager.urls(for: .documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).first else { return nil }
@@ -50,6 +55,7 @@ class Utils {
             if let filePath = filePath(forKey: key) {
                 do  {
                     try pngRepresentation.write(to: filePath, options: .atomic)
+                    print("Storing --> \(key)")
                 } catch let err {
                     print("Saving file resulted in error: ", err)
                 }
@@ -61,6 +67,7 @@ class Utils {
         if let filePath = filePath(forKey: key),
             let fileData = FileManager.default.contents(atPath: filePath.path),
             let image = UIImage(data: fileData) {
+            print("Retrieving --> \(key)")
             return image
         }
         return nil

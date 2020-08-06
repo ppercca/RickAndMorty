@@ -38,6 +38,8 @@ class AuthViewController: UIViewController {
         super.viewWillAppear(animated)
     }
     
+    // MARK: - Sign In Methods with Firebase with Email/Password, Google and Facebook
+    
     @IBAction func signUpButtonTapped(_ sender: Any) {
         setLogginIn(true)
         if let email = emailTextField.text, let password = passwordTextField.text {
@@ -68,7 +70,7 @@ class AuthViewController: UIViewController {
         loginManager.logOut()
         loginManager.logIn(permissions: [.email], viewController: self) { (result) in
             switch result {
-            case .success(granted: let granted, declined: let declined, token: let token):
+            case .success(granted: _, declined: _, token: let token):
                 let authCredential = FacebookAuthProvider.credential(withAccessToken: token.tokenString)
                 Auth.auth().signIn(with: authCredential) { (authDataResult, error) in
                     self.proceedAuthenticated(authDataResult: authDataResult, error: error, provider: Utils.ProviderType.facebook.rawValue)

@@ -54,16 +54,15 @@ class CharacterDetailViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
     
+    // MARK: - Configure Firestore to know if the Character is marked as favorite
+
     func configureDatabase() {
         activityIndicator.startAnimating()
         if let authenticatedEmail = UserDefaults.standard.string(forKey: "EmailAuthenticated") {
-            print("Authenticated User: \(authenticatedEmail)")
             collectionReference = Firestore.firestore().collection("\(authenticatedEmail)-favoriteCaracters")
             collectionReference.document("\(character.id)").getDocument { (document, error) in
                 self.activityIndicator.stopAnimating()
                 if let document = document, document.exists {
-                    let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                    print("Document data: \(dataDescription)")
                     self.favorite = true
                     self.favoriteButton.tintColor = UIColor(red: 0.9882352941, green: 0.7607843137, blue: 0, alpha: 1)
                 } else {
@@ -72,6 +71,8 @@ class CharacterDetailViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: - Load Character Information methods
     
     fileprivate func loadCharacterDetail() {
         nameLabel.text = character.name
@@ -82,15 +83,14 @@ class CharacterDetailViewController: UIViewController {
                 self.firstSeenLocationLabel.text = edpisodeResponse.name
             }
         }
-        RickAndMortyClient.getImage(path: character.image) { (data, error) in
+        RickAndMortyClient.getImage(urlString: character.image, index: nil) { (data, error, index) in
             if let data = data {
-                self.character.imageData = data
-                DispatchQueue.main.async {
-                    self.characterImageView.image = UIImage(data: data)
-                }
+                self.characterImageView.image = data
             }
         }
     }
+    
+    // MARK: - Mark Character as Favorite and store it in Firestore
     
     @IBAction func favoriteButtonTapped(_ sender: Any) {
         self.activityIndicator.startAnimating()
@@ -136,6 +136,8 @@ class CharacterDetailViewController: UIViewController {
     }
 }
 
+// MARK: - TableView Methods for Episodes
+
 extension CharacterDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -170,6 +172,8 @@ extension CharacterDetailViewController: UITableViewDelegate, UITableViewDataSou
     }
     
 }
+
+// MARK: - Dark and Light Mode Methods
 
 extension CharacterDetailViewController {
     

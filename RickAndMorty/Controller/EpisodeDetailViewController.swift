@@ -54,6 +54,8 @@ class EpisodeDetailViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
     }
+    
+    // MARK: - Configure Firestore to know if the Episode is marked as favorite
 
     func configureDatabase() {
         activityIndicator.startAnimating()
@@ -62,8 +64,6 @@ class EpisodeDetailViewController: UIViewController {
             collectionReference.document("\(episode.id)").getDocument { (document, error) in
                 self.activityIndicator.stopAnimating()
                 if let document = document, document.exists {
-                    let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                    print("Document data: \(dataDescription)")
                     self.favorite = true
                     self.favoriteButton.tintColor = UIColor(red: 0.9882352941, green: 0.7607843137, blue: 0, alpha: 1)
                 } else {
@@ -72,6 +72,8 @@ class EpisodeDetailViewController: UIViewController {
             }
         }
     }
+
+    // MARK: - Load Episodes Information methods
     
     fileprivate func loadEpisodeDetail() {
         imageView.image = UIImage(named: episode.episode)
@@ -90,23 +92,20 @@ class EpisodeDetailViewController: UIViewController {
     func handleGetCharacterResponse(characterResponse: CharacterResponse?, error: Error?, index: Int?) {
         guard let characterResponse = characterResponse else { return }
         DispatchQueue.global(qos: .background).async { () -> Void in
-            RickAndMortyClient.getImage(path: characterResponse.image, index: index!, completionHandler: self.handleImagesResponse(image:error:index:))
+            RickAndMortyClient.getImage(urlString: characterResponse.image, index: index, completionHandler: self.handleImagesResponse(image:error:index:))
         }
     }
     
-    func handleImagesResponse(image: UIImage? , error: Error?, index: Int) {
+    func handleImagesResponse(image: UIImage? , error: Error?, index: Int?) {
         if let image = image {
-            episode.charactersData?[index] = image.jpegData(compressionQuality: 1.0)!
+            episode.charactersData?[index!] = image.jpegData(compressionQuality: 1.0)!
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
     }
     
-    func configureCollection() {
-        flowLayout.minimumInteritemSpacing = 3.0
-        flowLayout.minimumLineSpacing = 3.0
-    }
+    // MARK: - Mark Episode as Favorite and store it in Firestore
     
     @IBAction func favoriteButtonTapped(_ sender: Any) {
         self.activityIndicator.startAnimating()
@@ -142,50 +141,25 @@ class EpisodeDetailViewController: UIViewController {
             }
         }
     }
-    
-    
-//    @objc func rotateScreen () {
-//        var width = view.frame.size.width
-//        var height = view.frame.size.height
-//        if !(self.isViewLoaded && self.view.window != nil) {
-//            width = view.frame.size.height
-//            height = view.frame.size.width
-//        }
-//        orderCells(width: width, height: height)
-//    }
-    
-//    func orderCells(width: CGFloat, height: CGFloat) {
-//          let space:CGFloat = 3.0
-//          var columns:CGFloat = 3.0
-//          if  width > height {
-//              columns = 5.0
-//          } else {
-//              columns = 3.0
-//          }
-//          let dimension = (width - ((columns - 1) * space)) / columns
-//          flowLayout.itemSize = CGSize(width: dimension, height: dimension * 0.8)
-//          flowLayout.minimumInteritemSpacing = space
-//          flowLayout.minimumLineSpacing = space
-//      }
 }
 
+// MARK: - CollectionView Methods for Characters
+
 extension EpisodeDetailViewController: UICollectionViewDelegateFlowLayout {
+    
+    func configureCollection() {
+        flowLayout.minimumInteritemSpacing = 3.0
+        flowLayout.minimumLineSpacing = 3.0
+    }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
-//        let height = collectionView.frame.height
         let columns:CGFloat = 3.0
-//        if  width > height {
-//            columns = 5.0
-//        } else {
-//            columns = 3.0
-//        }
         let dimension = (width - ((columns - 1) * 3.0)) / columns
         return CGSize(width: dimension, height: dimension)
     }
 
 }
-
 
 extension EpisodeDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -214,10 +188,11 @@ extension EpisodeDetailViewController: UICollectionViewDelegate, UICollectionVie
                 self.navigationController?.pushViewController(characterDetailViewController, animated: true)
             }
         })
-        
     }
     
 }
+
+// MARK: - Dark and Light Mode Methods
 
 extension EpisodeDetailViewController {
     

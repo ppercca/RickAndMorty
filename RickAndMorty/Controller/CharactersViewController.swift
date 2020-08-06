@@ -8,13 +8,16 @@
 
 import UIKit
 
-class CharactersViewController: UITableViewController {
+class CharactersViewController: UIViewController {
 
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var page: Int = 1
     var darkMode: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.startAnimating()
         RickAndMortyClient.getCharacters(page: page, completion: handleGetCharactersResponse(charactersResponse:error:))
     }
     
@@ -30,7 +33,10 @@ class CharactersViewController: UITableViewController {
         }
     }
     
+    // MARK: - Load Characters Methods
+    
     func handleGetCharactersResponse(charactersResponse: CharactersResponse?, error: Error?) {
+        activityIndicator.stopAnimating()
         guard var charactersResponse = charactersResponse else { return }
         for i in 0..<charactersResponse.results.count {
             charactersResponse.results[i].imageData = UIImage(named: "Placeholder")!.pngData()!
@@ -48,29 +54,35 @@ class CharactersViewController: UITableViewController {
     func loadImages(characters: [CharacterResponse], count: Int){
         var i = 0
         for character in characters {
-            RickAndMortyClient.getImage(path: character.image, index: (count - 20) + i, completionHandler: handleImagesResponse(image:error:index:))
+            RickAndMortyClient.getImage(urlString: character.image, index: (count - 20) + i, completionHandler: handleImagesResponse(image:error:index:))
             i += 1
         }
     }
     
-    func handleImagesResponse(image: UIImage? , error: Error?, index: Int) {
+    func handleImagesResponse(image: UIImage? , error: Error?, index: Int?) {
         if let image = image {
-            RickAndMortyModel.characters?.results[index].imageData = image.jpegData(compressionQuality: 1.0)
+            RickAndMortyModel.characters?.results[index!].imageData = image.jpegData(compressionQuality: 1.0)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+}
+
+// MARK: - Table View Methods for Characters
+
+extension CharactersViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return RickAndMortyModel.characters?.results.count ?? 0
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterTableViewCell") as! CharacterTableViewCell
         if darkMode {
             configureCellDarkMode(cell: cell)
@@ -92,23 +104,25 @@ class CharactersViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let count = RickAndMortyModel.characters?.results.count, let infoCount = RickAndMortyModel.characters?.info.count else { return }
         if indexPath.row == (count - 1) {
             if count < infoCount {
                 page += 1
+                activityIndicator.startAnimating()
                 RickAndMortyClient.getCharacters(page: page, completion: handleGetCharactersResponse(charactersResponse:error:))
             }
         }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let characterDetailViewController = self.storyboard!.instantiateViewController(withIdentifier: "CharacterDetailViewController") as! CharacterDetailViewController
         characterDetailViewController.character = RickAndMortyModel.characters?.results[indexPath.row]
         self.navigationController?.pushViewController(characterDetailViewController, animated: true)
     }
-    
 }
+
+// MARK: - Dark and Light Mode Methods
 
 extension CharactersViewController {
     
@@ -121,6 +135,7 @@ extension CharactersViewController {
     }
     
     func configureCellDarkMode(cell: CharacterTableViewCell)  {
+        cell.backgroundColor = UIColor(named: "DarkBackground1")
         cell.containerView.backgroundColor = UIColor(named: "DarkBackground1")
         cell.view.backgroundColor = UIColor(named: "DarkBackground2")
         cell.nameLabel.textColor = UIColor(named: "DarkValue")
@@ -132,6 +147,7 @@ extension CharactersViewController {
     }
     
     func configureCellLightMode(cell: CharacterTableViewCell) {
+        cell.backgroundColor = UIColor(named: "LightBackground1")
         cell.containerView.backgroundColor = UIColor(named: "LightBackground1")
         cell.view.backgroundColor = UIColor(named: "LightBackground2")
         cell.nameLabel.textColor = UIColor(named: "LightValue")

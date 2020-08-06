@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("App has launched before")
         } else {
             print("This is the first launch ever!")
-            UserDefaults.standard.set(false, forKey: "isDarkModeEnabled")
+            UserDefaults.standard.set(true, forKey: "isDarkModeEnabled")
             UserDefaults.standard.synchronize()
         }
     }
