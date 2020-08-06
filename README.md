@@ -26,7 +26,7 @@ For instructions how to run the app look here:
 ```
 pod install
 ```
-**5. Run the project:**
+**5. Run the project.**
 
 <!-- Features -->
 ## Features
@@ -40,6 +40,8 @@ The iOS app has the folling features:
 **3. The user can mark his favorites characters and episodes (The information is stored in Firestore).**
 
 **4. The iOS app support Dark Mode and Light Mode.**
+
+**5. The images of the characters are cached on the File System.**
 
 <!-- Tools -->
 ## Tools And Requirement
