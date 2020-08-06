@@ -26,6 +26,7 @@ For instructions how to run the app look here:
 ```
 pod install
 ```
+**5. Run the project:**
 
 <!-- Features -->
 ## Features
@@ -34,13 +35,11 @@ The iOS app has the folling features:
 
 **1. Alows the user to signIn with Email/Password, Google and Facebook (The authentication was developed using Firebase)**
 
-**2. Get the list of characters and episodes from the  [Rick and Morty API][api-link]**
+**2. Gets the list of characters and episodes from the  [Rick and Morty API][api-link] and are shown through tables and Collections**
 
-**3. The user can mark his favorites characters and episodes.**
+**3. The user can mark his favorites characters and episodes (The information is stored in Firestore).**
 
 **4. The iOS app support Dark Mode and Light Mode.**
-
-
 
 <!-- Tools -->
 ## Tools And Requirement
