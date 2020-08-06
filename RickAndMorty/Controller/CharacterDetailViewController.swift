@@ -22,6 +22,7 @@ class CharacterDetailViewController: UIViewController {
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var characterImageView: UIImageView!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var character: CharacterResponse!
     var darkMode: Bool = false
     var favorite: Bool = false
@@ -54,10 +55,12 @@ class CharacterDetailViewController: UIViewController {
     }
     
     func configureDatabase() {
+        activityIndicator.startAnimating()
         if let authenticatedEmail = UserDefaults.standard.string(forKey: "EmailAuthenticated") {
             print("Authenticated User: \(authenticatedEmail)")
             collectionReference = Firestore.firestore().collection("\(authenticatedEmail)-favoriteCaracters")
             collectionReference.document("\(character.id)").getDocument { (document, error) in
+                self.activityIndicator.stopAnimating()
                 if let document = document, document.exists {
                     let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
                     print("Document data: \(dataDescription)")
@@ -90,11 +93,13 @@ class CharacterDetailViewController: UIViewController {
     }
     
     @IBAction func favoriteButtonTapped(_ sender: Any) {
+        self.activityIndicator.startAnimating()
         if favorite {
             collectionReference.document("\(character.id)").delete { (error) in
                 self.favorite = false
                 print("Removing: \(self.character.id)")
                 DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
                     self.favoriteButton.tintColor = UIColor.gray
                 }
             }
@@ -122,6 +127,7 @@ class CharacterDetailViewController: UIViewController {
                     print("Storing: \(self.character.id)")
                     self.favorite = true
                     DispatchQueue.main.async {
+                        self.activityIndicator.stopAnimating()
                         self.favoriteButton.tintColor = UIColor(red: 0.9882352941, green: 0.7607843137, blue: 0, alpha: 1)
                     }
                 }

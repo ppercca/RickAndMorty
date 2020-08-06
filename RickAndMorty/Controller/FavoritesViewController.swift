@@ -15,6 +15,8 @@ class FavoritesViewController: UIViewController {
     @IBOutlet weak var episodesTableView: UITableView!
     @IBOutlet weak var favoriteCharactersLabel: UILabel!
     @IBOutlet weak var favoriteEpisodesLabel: UILabel!
+    @IBOutlet weak var favoriteCharactersActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var favoriteEpisodesActivityIndicator: UIActivityIndicatorView!
     var darkMode: Bool = false
     var authenticatedEmail: String!
     var charactersCollectionReference : CollectionReference!
@@ -27,6 +29,8 @@ class FavoritesViewController: UIViewController {
     }
     
     func configureDatabase() {
+        favoriteCharactersActivityIndicator.startAnimating()
+        favoriteEpisodesActivityIndicator.startAnimating()
         if let authenticatedEmail = UserDefaults.standard.string(forKey: "EmailAuthenticated") {
             print("Authenticated User: \(authenticatedEmail)")
             favoriteCharacters = []
@@ -34,6 +38,7 @@ class FavoritesViewController: UIViewController {
             charactersCollectionReference = Firestore.firestore().collection("\(authenticatedEmail)-favoriteCaracters")
             charactersCollectionReference.getDocuments { (snapshot, error) in
                 if let snapshot = snapshot {
+                    self.favoriteCharactersActivityIndicator.stopAnimating()
                     for document in snapshot.documents {
                         print("\(document.documentID) => \(document.data())")
                         let characterResponse = CharacterResponse(
@@ -62,6 +67,7 @@ class FavoritesViewController: UIViewController {
             episodesCollectionReference = Firestore.firestore().collection("\(authenticatedEmail)-favoriteEpisodes")
             episodesCollectionReference.getDocuments { (snapshot, error) in
                 if let snapshot = snapshot {
+                    self.favoriteEpisodesActivityIndicator.stopAnimating()
                     for document in snapshot.documents {
                         let episodeResponse = EpisodeResponse(
                             id: document.data()["id"] as! Int,

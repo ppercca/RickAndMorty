@@ -38,20 +38,25 @@ class SettingsTableViewController: UITableViewController {
     }
     
     @IBAction func closeSessionButtonTapped(_ sender: Any) {
-        let provider = UserDefaults.standard.string(forKey: "AuthenticatorProvider")
-        switch provider {
-        case Utils.ProviderType.basic.rawValue:
-            logOut()
-        case Utils.ProviderType.google.rawValue:
-            GIDSignIn.sharedInstance()?.signOut()
-            logOut()
-        case Utils.ProviderType.facebook.rawValue:
-            LoginManager().logOut()
-            logOut()
-            break
-        default:
-            break
-        }
+        let refreshAlert = UIAlertController(title: "Sign Out", message: "Are you sure that you want to sign out?", preferredStyle: UIAlertController.Style.alert)
+        refreshAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+            let provider = UserDefaults.standard.string(forKey: "AuthenticatorProvider")
+              switch provider {
+              case Utils.ProviderType.basic.rawValue:
+                self.logOut()
+              case Utils.ProviderType.google.rawValue:
+                  GIDSignIn.sharedInstance()?.signOut()
+                  self.logOut()
+              case Utils.ProviderType.facebook.rawValue:
+                  LoginManager().logOut()
+                  self.logOut()
+                  break
+              default:
+                  break
+              }
+        }))
+        present(refreshAlert, animated: true, completion: nil)
     }
     
     func logOut() {
@@ -74,9 +79,7 @@ class SettingsTableViewController: UITableViewController {
         contentView1.backgroundColor = UIColor(named: "DarkBackground2")
         contentView2.backgroundColor = UIColor(named: "DarkBackground2")
         darkAppereanceLabel.textColor = UIColor(named: "DarkValue")
-        DispatchQueue.main.async {
-            self.closeSessionButton.titleLabel?.textColor = UIColor(named: "DarkValue")
-        }
+        closeSessionButton.setTitleColor(UIColor(named: "DarkValue"), for: .normal)
         let header = tableView.headerView(forSection: 0)
         header?.tintColor = UIColor(named: "DarkBackground1")
         header?.textLabel?.textColor = UIColor(named: "DarkLabel")
@@ -89,9 +92,7 @@ class SettingsTableViewController: UITableViewController {
         contentView1.backgroundColor = UIColor(named: "LightBackground2")
         contentView2.backgroundColor = UIColor(named: "LightBackground2")
         darkAppereanceLabel.textColor = UIColor(named: "LightValue")
-        DispatchQueue.main.async {
-            self.closeSessionButton.titleLabel?.textColor = UIColor(named: "LightValue")
-        }
+        closeSessionButton.setTitleColor(UIColor(named: "LightValue"), for: .normal)
         let header = tableView.headerView(forSection: 0)
         header?.tintColor = UIColor(named: "LightBackground1")
         header?.textLabel?.textColor = UIColor(named: "LightLabel")
@@ -125,6 +126,7 @@ class SettingsTableViewController: UITableViewController {
             UserDefaults.standard.set(false, forKey: "isDarkModeEnabled")
             configureLightMode()
         }
+        darkMode = switchValue.isOn
     }
     
 }
